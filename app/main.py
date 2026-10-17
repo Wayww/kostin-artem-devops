@@ -13,7 +13,7 @@ def student_data() -> dict[str, str]:
         "surname": os.getenv("STUDENT_SURNAME", "Kostin"),
         "group": os.getenv("STUDENT_GROUP", "IT23-14"),
         "student_id": os.getenv("STUDENT_ID", "37089"),
-        "course": "DevOps",
+        "course": os.getenv("STUDENT_COURSE", "DevOps"),
         "status": "DevOps Student Application is running successfully",
     }
 
