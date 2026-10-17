@@ -1,0 +1,12 @@
+.git
+.gitignore
+.env
+backup
+logs
+__pycache__
+*.pyc
+*.pyo
+.DS_Store
+evidence
+output
+tmp

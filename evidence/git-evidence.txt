@@ -1,0 +1,30 @@
+$ git status --short --branch
+## main...origin/main
+
+$ git branch -avv
+  development         af05846 docs: document health check endpoint
+* main                e281363 [origin/main] test: capture final pipeline and command evidence
+  remotes/origin/main e281363 test: capture final pipeline and command evidence
+
+$ git log --oneline --graph --decorate --all -10
+* e281363 (HEAD -> main, origin/main) test: capture final pipeline and command evidence
+* 0f28907 test: record successful Jenkins pipeline build
+* 654ca0e test: add verified Docker and Jenkins evidence
+* 84e035a feat: complete laboratory requirements and Jenkins setup
+* fda6d90 chore: remove generated report artifacts
+* 8c852f0 docs: record verified GitHub publication
+* 4586ca9 docs: add completed DevOps laboratory report
+* 1a16a12 style: remove source code comments
+*   5a7bcae merge: integrate development branch
+|\  
+| * af05846 (development) docs: document health check endpoint
+|/  
+
+$ git remote -v
+origin	https://github.com/Wayww/kostin-artem-devops.git (fetch)
+origin	https://github.com/Wayww/kostin-artem-devops.git (push)
+
+$ git check-ignore -v logs/application.log backup/demo/example.txt .env
+.gitignore:1:*.log	logs/application.log
+.gitignore:2:backup/*	backup/demo/example.txt
+.gitignore:4:.env	.env

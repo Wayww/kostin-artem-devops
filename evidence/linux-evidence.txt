@@ -1,0 +1,32 @@
+$ pwd
+/Users/wayww/Documents/DevOps Student Application
+
+$ find . -name application.log
+./logs/application.log
+
+$ grep ERROR logs/application.log
+ERROR Database connection failed
+ERROR Request failed
+
+$ grep WARNING logs/application.log
+WARNING Configuration file missing
+WARNING Memory usage is high
+
+$ grep -c ERROR logs/application.log
+2
+
+$ tail -n 5 logs/application.log
+INFO Application restarted
+WARNING Memory usage is high
+INFO Request received
+ERROR Request failed
+INFO Application stopped
+
+$ ls -l private.txt public.txt scripts/Kostin_Artem_system.sh
+-rw-------@ 1 wayww  staff    43 Oct  8 12:14 private.txt
+-rw-r--r--@ 1 wayww  staff    57 Oct  8 12:14 public.txt
+-rwxr-xr-x@ 1 wayww  staff  1354 Oct 18 03:29 scripts/Kostin_Artem_system.sh
+
+$ ps -p $$ -o pid,user,%cpu,%mem,command
+  PID USER   %CPU %MEM COMMAND
+40590 wayww   0.0  0.0 bash ./scripts/collect_evidence.sh

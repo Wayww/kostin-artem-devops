@@ -1,0 +1,146 @@
+Started by user unknown or anonymous
+Obtained Jenkinsfile from git https://github.com/Wayww/kostin-artem-devops.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/Kostin_Artem_DevOps
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/Kostin_Artem_DevOps/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/Wayww/kostin-artem-devops.git # timeout=10
+Fetching upstream changes from https://github.com/Wayww/kostin-artem-devops.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/Wayww/kostin-artem-devops.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 654ca0ec044731cdb7d86a8e5b33cb54ae98f77a (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 654ca0ec044731cdb7d86a8e5b33cb54ae98f77a # timeout=10
+Commit message: "test: add verified Docker and Jenkins evidence"
+ > git rev-list --no-walk 84e035aa58b1c5b4c95c8e43c2976c195960bd5c # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/Kostin_Artem_DevOps/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/Wayww/kostin-artem-devops.git # timeout=10
+Fetching upstream changes from https://github.com/Wayww/kostin-artem-devops.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/Wayww/kostin-artem-devops.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 654ca0ec044731cdb7d86a8e5b33cb54ae98f77a (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 654ca0ec044731cdb7d86a8e5b33cb54ae98f77a # timeout=10
+Commit message: "test: add verified Docker and Jenkins evidence"
+[Pipeline] sh
++ git rev-parse --short HEAD
+654ca0e
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] sh
++ python3 -m compileall -q app
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] sh
++ python3 -m unittest discover -s tests -v
+test_defaults_are_available (test_app.StudentDataTests.test_defaults_are_available) ... ok
+test_environment_overrides_student_data (test_app.StudentDataTests.test_environment_overrides_student_data) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Docker Build)
+[Pipeline] sh
++ docker build -t kostin-artem-devops:3 -t kostin-artem-devops:latest .
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon     64kB
+Step 1/8 : FROM python:3.12-slim
+ ---> a6e34c598f24
+Step 2/8 : WORKDIR /app
+ ---> Using cache
+ ---> 1702e0016319
+Step 3/8 : COPY app/ ./app/
+ ---> Using cache
+ ---> e0f94e3f159f
+Step 4/8 : COPY tests/ ./tests/
+ ---> Using cache
+ ---> 7fd8d0d034c8
+Step 5/8 : RUN python -m unittest discover -s tests -v
+ ---> Using cache
+ ---> ca9f6b355877
+Step 6/8 : ENV APP_PORT=8080
+ ---> Using cache
+ ---> 7b9669670ad1
+Step 7/8 : EXPOSE 8080
+ ---> Using cache
+ ---> 508e6b71489c
+Step 8/8 : CMD ["python", "app/main.py"]
+ ---> Using cache
+ ---> 7c35ad756ccd
+Successfully built 7c35ad756ccd
+Successfully tagged kostin-artem-devops:3
+Successfully tagged kostin-artem-devops:latest
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Docker Run)
+[Pipeline] sh
++ docker rm -f kostin-artem-container
++ docker run -d --name kostin-artem-container -p 8080:8080 -e STUDENT_NAME=Artem -e STUDENT_SURNAME=Kostin -e STUDENT_GROUP=IT23-14 -e STUDENT_ID=37089 kostin-artem-devops:3
+89320d82a457bb2ad890e2786552e3117b99a9b09d8996d10082a35d63837ee0
++ docker exec kostin-artem-container python -c import urllib.request; print(urllib.request.urlopen('http://localhost:8080/health').read().decode())
+{
+  "status": "ok"
+}
++ break
++ docker logs kostin-artem-container
+INFO Application started on port 8080
+INFO 127.0.0.1 - "GET /health HTTP/1.1" 200 -
+[Pipeline] echo
+Student: Artem Kostin
+[Pipeline] echo
+Group: IT23-14
+[Pipeline] echo
+Student ID: 37089
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+Finished: SUCCESS
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

@@ -1,0 +1,165 @@
+$ docker rm -f kostin-artem-container
+kostin-artem-container
+
+$ docker build -t kostin-artem-devops .
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 221B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12-slim
+#2 DONE 0.1s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 127B done
+#3 DONE 0.0s
+
+#4 [1/5] FROM docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1
+#4 resolve docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1 done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 3.22kB done
+#5 DONE 0.0s
+
+#6 [2/5] WORKDIR /app
+#6 CACHED
+
+#7 [3/5] COPY app/ ./app/
+#7 DONE 0.0s
+
+#8 [4/5] COPY tests/ ./tests/
+#8 DONE 0.0s
+
+#9 [5/5] RUN python -m unittest discover -s tests -v
+#9 0.313 test_defaults_are_available (test_app.StudentDataTests.test_defaults_are_available) ... ok
+#9 0.313 test_environment_overrides_student_data (test_app.StudentDataTests.test_environment_overrides_student_data) ... ok
+#9 0.313 
+#9 0.313 ----------------------------------------------------------------------
+#9 0.313 Ran 2 tests in 0.000s
+#9 0.313 
+#9 0.313 OK
+#9 DONE 0.3s
+
+#10 exporting to image
+#10 exporting layers 0.1s done
+#10 exporting manifest sha256:9b6315590f3afbae7e83d854d4c268d7fbdd81ab2356b8907e01af2e51504156 done
+#10 exporting config sha256:a1617ab4a59b9b84d9a3926a5136703ff7dfb30fb34efb546608b2f5c1d26c8d done
+#10 exporting attestation manifest sha256:b3b8ae8ab71d5854cb35907d32f9bd978dd1cbfbb8e9a440d37b62bd2b312d9f done
+#10 exporting manifest list sha256:33a9df1c19fe2bbe29ee0453b5d97c15b9dc9f1067051ae360dbfb6f58a1e1be done
+#10 naming to docker.io/library/kostin-artem-devops:latest done
+#10 unpacking to docker.io/library/kostin-artem-devops:latest 0.0s done
+#10 DONE 0.2s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/y2urxj4er1mq1ku9qq3lo30bw
+
+$ docker images kostin-artem-devops
+IMAGE                        ID             DISK USAGE   CONTENT SIZE   EXTRA
+kostin-artem-devops:2        7c35ad756ccd        208MB           45MB        
+kostin-artem-devops:latest   33a9df1c19fe        208MB           45MB        
+
+$ docker run -d -e STUDENT_NAME=Artem -e STUDENT_SURNAME=Kostin -e STUDENT_GROUP=IT23-14 -e STUDENT_ID=37089 --name kostin-artem-container -p 8080:8080 kostin-artem-devops
+54bf7170fe88a335574c630a8cc53a648492360d956faddd36c29c568d1a7b59
+
+$ docker ps
+CONTAINER ID   IMAGE                 COMMAND                CREATED        STATUS        PORTS                                         NAMES
+54bf7170fe88   kostin-artem-devops   "python app/main.py"   1 second ago   Up 1 second   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp   kostin-artem-container
+
+$ docker ps -a
+CONTAINER ID   IMAGE                 COMMAND                CREATED        STATUS        PORTS                                         NAMES
+54bf7170fe88   kostin-artem-devops   "python app/main.py"   1 second ago   Up 1 second   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp   kostin-artem-container
+
+$ docker logs kostin-artem-container
+INFO Application started on port 8080
+INFO 192.168.65.1 - "GET /health HTTP/1.1" 200 -
+
+$ docker exec kostin-artem-container python app/main.py --check
+{
+  "name": "Artem",
+  "surname": "Kostin",
+  "group": "IT23-14",
+  "student_id": "37089",
+  "course": "DevOps",
+  "status": "DevOps Student Application is running successfully"
+}
+
+$ docker stop kostin-artem-container
+kostin-artem-container
+
+$ docker start kostin-artem-container
+kostin-artem-container
+
+$ docker rm -f kostin-artem-container
+kostin-artem-container
+
+$ docker compose up --build -d
+ Image kostin-artem-devops:latest Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 594B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 221B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/python:3.12-slim
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 127B done
+#4 DONE 0.0s
+
+#5 [1/5] FROM docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1
+#5 resolve docker.io/library/python:3.12-slim@sha256:a6e34c598f2467ed0e9a8d349809fcd8b5c603269512df273a0bb1784edc11b1 done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 150B done
+#6 DONE 0.0s
+
+#7 [2/5] WORKDIR /app
+#7 CACHED
+
+#8 [4/5] COPY tests/ ./tests/
+#8 CACHED
+
+#9 [3/5] COPY app/ ./app/
+#9 CACHED
+
+#10 [5/5] RUN python -m unittest discover -s tests -v
+#10 CACHED
+
+#11 exporting to image
+#11 exporting layers done
+#11 exporting manifest sha256:ca48fd8f82806942d3c01f53ae5261bc509690c268a6b102fdc2f13ac6d8d86e done
+#11 exporting config sha256:316032d6c8b4ff4db0540abc73c403004564fb0f2caaca6b497808772195a180 done
+#11 exporting attestation manifest sha256:1da1bc4dc27b207a59b3525208f778d3d04a27501d4edd5cb5e51b7f8e6d9eca done
+#11 exporting manifest list sha256:7f2171de5a024b984d0e7870d14e0b5a17e2fedcd5d546ffcb4898cc92f5ff57 done
+#11 naming to docker.io/library/kostin-artem-devops:latest done
+#11 unpacking to docker.io/library/kostin-artem-devops:latest done
+#11 DONE 0.0s
+
+#12 resolving provenance for metadata file
+#12 DONE 0.0s
+ Image kostin-artem-devops:latest Built 
+time="2026-10-18T03:38:01+05:00" level=warning msg="Found orphan containers (kostin-artem-jenkins) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up."
+ Container kostin-artem-container Creating 
+ Container kostin-artem-container Created 
+ Container kostin-artem-container Starting 
+ Container kostin-artem-container Started 
+
+$ docker compose ps
+NAME                     IMAGE                         COMMAND                  SERVICE       CREATED                  STATUS                  PORTS
+kostin-artem-container   kostin-artem-devops:latest    "python app/main.py"     student-app   Less than a second ago   Up Less than a second   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
+kostin-artem-jenkins     kostin-artem-jenkins:latest   "/usr/bin/tini -- /u…"   jenkins       3 minutes ago            Up 3 minutes            0.0.0.0:50000->50000/tcp, [::]:50000->50000/tcp, 0.0.0.0:8081->8080/tcp, [::]:8081->8080/tcp
+
+$ docker compose down
+ Container kostin-artem-container Stopping 
+ Container kostin-artem-container Stopped 
+ Container kostin-artem-container Removing 
+ Container kostin-artem-container Removed 
+ Network devopsstudentapplication_default Removing 
+ Network devopsstudentapplication_default Resource is still in use 
+
+Docker workflow completed successfully.

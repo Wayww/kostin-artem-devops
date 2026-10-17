@@ -1,0 +1,16 @@
+services:
+  student-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: kostin-artem-devops:latest
+    container_name: kostin-artem-container
+    environment:
+      STUDENT_NAME: ${STUDENT_NAME:-Artem}
+      STUDENT_SURNAME: ${STUDENT_SURNAME:-Kostin}
+      STUDENT_GROUP: ${STUDENT_GROUP:-IT23-14}
+      STUDENT_ID: ${STUDENT_ID:-37089}
+      APP_PORT: 8080
+    ports:
+      - "8080:8080"
+    restart: unless-stopped

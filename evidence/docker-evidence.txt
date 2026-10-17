@@ -1,0 +1,29 @@
+$ docker images kostin-artem-devops
+IMAGE                        ID             DISK USAGE   CONTENT SIZE   EXTRA
+kostin-artem-devops:2        7c35ad756ccd        208MB           45MB   U    
+kostin-artem-devops:3        7c35ad756ccd        208MB           45MB   U    
+kostin-artem-devops:latest   7c35ad756ccd        208MB           45MB   U    
+
+$ docker ps -a
+CONTAINER ID   IMAGE                   COMMAND                CREATED         STATUS         PORTS                                         NAMES
+89320d82a457   kostin-artem-devops:3   "python app/main.py"   2 minutes ago   Up 2 minutes   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp   kostin-artem-container
+
+$ docker logs kostin-artem-container
+INFO Application started on port 8080
+INFO 127.0.0.1 - "GET /health HTTP/1.1" 200 -
+INFO 192.168.65.1 - "GET /health HTTP/1.1" 200 -
+
+$ docker exec kostin-artem-container python app/main.py --check
+{
+  "name": "Artem",
+  "surname": "Kostin",
+  "group": "IT23-14",
+  "student_id": "37089",
+  "course": "DevOps",
+  "status": "DevOps Student Application is running successfully"
+}
+
+$ curl http://localhost:8080/health
+{
+  "status": "ok"
+}

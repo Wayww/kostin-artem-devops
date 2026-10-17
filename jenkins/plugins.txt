@@ -1,0 +1,3 @@
+git
+pipeline-stage-view
+workflow-aggregator
