@@ -23,6 +23,7 @@ class StudentDataTests(unittest.TestCase):
             "STUDENT_SURNAME": "TestSurname",
             "STUDENT_GROUP": "TEST-101",
             "STUDENT_ID": "12345",
+            "STUDENT_COURSE": "Platform Engineering",
         }
         with patch.dict(os.environ, environment, clear=True):
             data = student_data()
@@ -31,6 +32,7 @@ class StudentDataTests(unittest.TestCase):
         self.assertEqual(data["surname"], "TestSurname")
         self.assertEqual(data["group"], "TEST-101")
         self.assertEqual(data["student_id"], "12345")
+        self.assertEqual(data["course"], "Platform Engineering")
 
 
 if __name__ == "__main__":
