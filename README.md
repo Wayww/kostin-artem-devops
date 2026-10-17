@@ -31,6 +31,19 @@ python3 -m unittest discover -s tests -v
 python3 app/main.py --check
 ```
 
+## Git workflow
+
+Новые изменения разрабатываются в отдельной ветке `development`. После
+проверки они объединяются с основной веткой `main` через merge-коммит. Такой
+подход изолирует незавершённую работу и сохраняет наглядную историю разработки.
+
+Проверить ветки и историю объединения можно командами:
+
+```bash
+git branch
+git log --oneline --graph --all
+```
+
 ## Integrated DevOps Workflow
 
 1. **Linux** предоставляет файловую систему, права, процессы и shell-команды,

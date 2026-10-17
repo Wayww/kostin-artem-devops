@@ -10,6 +10,7 @@ services:
       STUDENT_SURNAME: ${STUDENT_SURNAME:-Kostin}
       STUDENT_GROUP: ${STUDENT_GROUP:-IT23-14}
       STUDENT_ID: ${STUDENT_ID:-37089}
+      STUDENT_COURSE: ${STUDENT_COURSE:-DevOps}
       APP_PORT: 8080
     ports:
       - "8080:8080"
